@@ -1,0 +1,28 @@
+﻿@model List<HouseHub.Shared.Models.UserProfile>
+
+<h2>User Profiles</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var profile in Model)
+        {
+            <tr>
+                <td>@profile.FullName</td>
+                <td>@profile.Email</td>
+                <td>@profile.CreatedAt.ToString("g")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@profile.Id">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@profile.Id">Delete</a>
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
