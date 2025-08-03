@@ -93,5 +93,57 @@ namespace HouseHub.Web.Controllers
             return View(userProfile);
         }
 
+        // GET: UserProfiles/Edit/{id}
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var userProfile = await _context.UserProfiles.FindAsync(id);
+
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+
+            return View(userProfile);
+        }
+
+        // POST: UserProfiles/Edit/{id}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, UserProfile userProfile)
+        {
+            if (id != userProfile.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(userProfile);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserProfileExists(userProfile.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(userProfile);
+        }
+
+        private bool UserProfileExists(Guid id) 
+        {
+            return _context.UserProfiles.Any(e => e.Id == id);
+        }
     }
 }
