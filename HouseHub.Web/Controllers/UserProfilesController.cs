@@ -75,5 +75,23 @@ namespace HouseHub.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: UserProfiles/Details/5
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var userProfile = await _context.UserProfiles.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+
+            return View(userProfile);
+        }
+
     }
 }
