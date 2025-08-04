@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Dashbord";
+}
+
+@model HouseHub.Web.ViewModels.DashboardViewModel
+
+<h2>Dashboard</h2>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-header">Total Users</div>
+            <div class="card-body">
+                <h4 class="card-title">@Model.TotalUserProfiles</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-header">New This Week</div>
+            <div class="card-body">
+                <h4 class="card-title">@Model.NewUsersThisWeek</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">User Growth Chart</div>
+    <div class="card-body">
+        <canvas id="userChart"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const ctx = document.getElementById('userChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.Labels)),
+                datasets: [{
+                    label: 'New Users',
+                    data: @Html.Raw(Json.Serialize(Model.DataPoints)),
+                    backgroundColor: '#007bff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: 'New Users Over the Last 7 Days'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}
+
