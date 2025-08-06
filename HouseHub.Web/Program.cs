@@ -1,4 +1,5 @@
 using HouseHub.Web.Data;
+using HouseHub.Web.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace HouseHub.Web
@@ -11,6 +12,8 @@ namespace HouseHub.Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IDashboardService, DashboardService>();
+
 
             // Register DbContext
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
