@@ -22,6 +22,9 @@ namespace HouseHub.Web.Services
             var totalUsers = await _context.UserProfiles.CountAsync();
             var newUsersThisWeek = await _context.UserProfiles
                 .CountAsync(u => u.CreatedAt >= weekAgo);
+            var newUsersToday = await _context.UserProfiles
+                .CountAsync(u => DateTime.SpecifyKind(u.CreatedAt.Date, DateTimeKind.Utc) == today);
+
 
             // Prepare chart data for the last 7 days
             var dailyCounts = await _context.UserProfiles
@@ -43,6 +46,7 @@ namespace HouseHub.Web.Services
             {
                 TotalUserProfiles = totalUsers,
                 NewUsersThisWeek = newUsersThisWeek,
+                NewUsersToday = newUsersToday,
                 Labels = labels.Select(d => d.ToString("MMM d")).ToList(),
                 DataPoints = labels.Select(d =>
                     dailyCounts.FirstOrDefault(dc => dc.Date == d)?.Count ?? 0
