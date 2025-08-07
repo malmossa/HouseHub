@@ -7,7 +7,7 @@
 <h2>Dashboard</h2>
 
 <div class="row mb-4">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="card text-white bg-primary mb-3">
             <div class="card-header">Total Users</div>
             <div class="card-body">
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="card text-white bg-success mb-3">
             <div class="card-header">New This Week</div>
             <div class="card-body">
@@ -24,6 +24,16 @@
             </div>
         </div>
     </div>
+
+    <div class="col-md-4">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-header">New Today</div>
+            <div class="card-body">
+                <h4 class="card-title">@Model.NewUsersToday</h4>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div class="card">
